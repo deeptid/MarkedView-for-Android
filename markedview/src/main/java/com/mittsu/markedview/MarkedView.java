@@ -3,6 +3,8 @@ package com.mittsu.markedview;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Base64;
@@ -57,6 +59,14 @@ public final class MarkedView extends WebView {
                 } else {
                     evaluateJavascript(previewText, null);
                 }
+            }
+
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                Uri uri = Uri.parse(url);
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                getContext().startActivity(intent);
+                return true; //the webview will not load the URL
             }
         });
 
